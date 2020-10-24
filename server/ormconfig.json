@@ -7,5 +7,5 @@
   "database": "abcd",
   "synchronize": true,
   "logging": true,
-  "entities": ["src/entity/**/*.[jt]s"]
+  "entities": ["src/entity/**/*.ts"]
 }

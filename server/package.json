@@ -5,19 +5,34 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc -w",
-    "start": "nodemon start dist/index.js"
+    "start": "ts-node-dev src/index.ts",
+    "start2": "nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.2",
+    "class-validator": "^0.12.2",
     "nodemon": "^2.0.6",
+    "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "@types/connect-redis": "0.0.14",
+    "@types/express-session": "^1.17.0",
+    "@types/redis": "^2.8.28",
+    "apollo-server-express": "^2.18.2",
+    "argon2": "^0.27.0",
+    "connect-redis": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "graphql": "^15.3.0",
     "pg": "^8.4.1",
+    "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.0",
     "typeorm": "^0.2.28"
   }
 }
