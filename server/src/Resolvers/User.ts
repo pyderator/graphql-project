@@ -55,6 +55,16 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(@Arg("data") InputData: RegisterInput): Promise<UserResponse> {
     const { username, password, name } = InputData;
+    if (await User.findOne({ username })) {
+      return {
+        errors: [
+          {
+            field: "username",
+            msg: "Already Exists",
+          },
+        ],
+      };
+    }
     if (username.length < 5) {
       return {
         errors: [

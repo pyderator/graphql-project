@@ -7,11 +7,19 @@ import express from "express";
 import session from "express-session";
 import connectRedis from "connect-redis";
 import redis from "redis";
+import cors from "cors";
+
 const main = async () => {
   await createConnection();
   const redisStore = connectRedis(session);
   const client = redis.createClient();
   const app = express();
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
   app.use(
     session({
       store: new redisStore({ client }),
@@ -35,7 +43,10 @@ const main = async () => {
     }),
   });
 
-  server.applyMiddleware({ app });
+  server.applyMiddleware({
+    app,
+    cors: false,
+  });
 
   app.listen(4000, () => console.log("Listening on port 4000"));
 };
