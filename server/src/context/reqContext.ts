@@ -1,5 +1,6 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 
 export type ReqContext = {
   req: Request;
+  res: Response;
 };

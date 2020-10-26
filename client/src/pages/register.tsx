@@ -2,9 +2,11 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { makeStyles, Button } from "@material-ui/core";
 import InputField from "../components/InputField";
-import { useRegisterMutation } from "../src/generated/graphql";
-import { errorMap } from "../src/utils/errorMap";
+import { useRegisterMutation } from "../generated/graphql";
+import { errorMap } from "../utils/errorMap";
 import { useRouter } from "next/router";
+import { withUrqlClient } from "next-urql";
+import client from "../utils/UrqlClient";
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: "500px",
@@ -66,4 +68,4 @@ const Register: React.FC<registerProps> = ({}) => {
     </div>
   );
 };
-export default Register;
+export default withUrqlClient(client)(Register);

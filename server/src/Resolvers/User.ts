@@ -53,7 +53,11 @@ export class UserResolver {
   }
 
   @Mutation(() => UserResponse)
-  async register(@Arg("data") InputData: RegisterInput): Promise<UserResponse> {
+  async register(
+    @Arg("data") InputData: RegisterInput,
+    @Ctx() reqContext: ReqContext,
+  ): Promise<UserResponse> {
+    const { req } = reqContext;
     const { username, password, name } = InputData;
     if (await User.findOne({ username })) {
       return {
@@ -89,6 +93,7 @@ export class UserResolver {
       password: await hash(password),
       name,
     }).save();
+    req.session!.userId = user.id;
     return { user };
   }
 
@@ -127,7 +132,7 @@ export class UserResolver {
     };
   }
 
-  @Mutation(() => UserResponse, { nullable: true })
+  @Query(() => UserResponse, { nullable: true })
   async QueryYourself(
     @Ctx() { req }: ReqContext,
   ): Promise<UserResponse | undefined> {
@@ -144,5 +149,22 @@ export class UserResolver {
     }
     const user = await User.findOne(userId);
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  async LogOut(@Ctx() reqContext: ReqContext) {
+    const { req, res } = reqContext;
+    return new Promise(resolver => {
+      req.session?.destroy(err => {
+        if (err) {
+          console.log(err);
+          res.clearCookie("session_id");
+          resolver(false);
+          return;
+        }
+        res.clearCookie("session_id");
+        resolver(true);
+      });
+    });
   }
 }

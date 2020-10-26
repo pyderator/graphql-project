@@ -9,7 +9,6 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 
 const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, { error }] = useField(props);
-  console.log(error);
   return (
     <TextField
       fullWidth

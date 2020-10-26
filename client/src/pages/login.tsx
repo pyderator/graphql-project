@@ -1,9 +1,11 @@
 import { Button } from "@material-ui/core";
 import { Form, Formik } from "formik";
+import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
 import InputField from "../components/InputField";
-import { useLoginMutation } from "../src/generated/graphql";
-import { errorMap } from "../src/utils/errorMap";
+import { useLoginMutation } from "../generated/graphql";
+import { errorMap } from "../utils/errorMap";
+import client from "../utils/UrqlClient";
 
 const Login = () => {
   const [{}, login] = useLoginMutation();
@@ -45,4 +47,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default withUrqlClient(client)(Login);

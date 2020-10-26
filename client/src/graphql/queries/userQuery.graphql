@@ -1,0 +1,11 @@
+query UserQuery {
+  QueryYourself {
+    errors {
+      field
+      msg
+    }
+    user {
+      ...user
+    }
+  }
+}
